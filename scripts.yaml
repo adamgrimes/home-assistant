@@ -1,0 +1,178 @@
+###
+#   The Tradfri lights cannot take commands with multiple values, so scenes have to 
+#   be crafted as scripts that update the lights with both brightness and color_temp
+###
+
+chill_lights:
+  alias: Chill Lights
+  sequence:
+    - alias: Couch Light 1
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe175f74_1
+        brightness: 133
+    - alias: Makeup Light 1.1
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd989_1
+        brightness: 133
+    - alias: Makeup Light 2.1
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd3ee_1
+        brightness: 133
+    - delay: 
+        seconds: 1
+    - alias: Couch Light 2
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe175f74_1
+        color_temp: 353
+    - alias: Makeup Light 1.2
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd989_1
+        color_temp: 353
+    - alias: Makeup Light 2.2
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd3ee_1
+        color_temp: 353
+
+movie_lights:
+  alias: Movie Lights
+  sequence:
+    - alias: Couch Light 1
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe175f74_1
+        brightness: 52
+    - alias: Makeup Light 1.1
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd989_1
+        brightness: 52
+    - alias: Makeup Light 2.1
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd3ee_1
+        brightness: 52
+    - delay:
+        seconds: 1
+    - alias: Couch Light 2
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe175f74_1
+        color_temp: 388
+    - alias: Makeup Light 1.2
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd989_1
+        color_temp: 340
+    - alias: Makeup Light 2.2
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd3ee_1
+        color_temp: 340
+
+selfie_lights:
+  alias: Selfie Lights
+  sequence:
+    - alias: Couch Light 1
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe175f74_1
+        brightness: 255
+    - alias: Makeup Light 1.1
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd989_1
+        brightness: 255
+    - alias: Makeup Light 2.1
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd3ee_1
+        brightness: 255
+    - delay: 
+        seconds: 1
+    - alias: Couch Light 2
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe175f74_1
+        color_temp: 332
+    - alias: Makeup Light 1.2
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd989_1
+        color_temp: 153
+    - alias: Makeup Light 2.2
+      service: light.turn_on
+      data:
+        entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd3ee_1
+        color_temp: 500
+
+vacuum_kitchen:
+  alias: "Vacuum the kitchen"
+  sequence:
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.lobo
+        command: app_zoned_clean
+        params: [[20100, 28200, 22000, 29900, 1]]
+
+vacuum_common:
+  alias: "Vacuum the main room"
+  sequence:
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.lobo
+        command: app_zoned_clean
+        params: [[19400, 25000, 28700, 28150, 1], [25500, 28150, 28700, 29110, 1], [23000, 28150, 25500, 31000, 1]]
+
+vacuum_bedroom:
+  alias: "Vacuum the bedroom"
+  sequence:
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.lobo
+        command: app_zoned_clean
+        params: [[25500, 29180, 28700, 33600, 1], [24700, 31000, 25500, 33600, 1]]
+
+vacuum_office:
+  alias: "Vacuum the office"
+  sequence:
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.lobo
+        command: app_zoned_clean
+        params: [[19400, 30500, 22900, 33900, 1]]
+
+vacuum_path:
+  alias: "Vacuum main path"
+  sequence:
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.lobo
+        command: app_zoned_clean
+        params: [[24300, 27400, 28250, 28300, 1]]
+
+vacuum_start:
+  alias: "Vacuum everything"
+  sequence:
+    - service: vacuum.start
+      data:
+        entity_id: vacuum.lobo
+
+stop_vacuum:
+  alias: "Stop the vacuum"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.lobo
+
+dock_vacuum:
+  alias: "Return to dock"
+  sequence:
+    - service: vacuum.return_to_base
+      data:
+        entity_id: vacuum.lobo

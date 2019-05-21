@@ -1,0 +1,128 @@
+homeassistant:
+  name: Home
+  latitude: !secret latitude
+  longitude: !secret longitude
+  elevation: !secret elevation
+  unit_system: imperial
+  time_zone: !secret time_zone
+  customize: !include customize.yaml
+  customize_glob: !include customize_glob.yaml
+  
+logger:
+  default: warning
+
+frontend:
+  themes: !include themes.yaml
+config:
+http:
+  #  base_url: https://192.168.86.24/
+  # ssl_certificate: /ssl/fullchain.pem
+  # ssl_key: /ssl/privkey.pem
+updater:
+  include_used_components: true
+system_health:
+discovery:
+  ignore:
+    - plex_mediaserver
+homekit:
+
+# Add Cloud9 web based IDE
+#panel_iframe:
+#  ide:
+#    title: IDE
+#    icon: mdi:code-braces
+#    url: /:8181
+
+cloud:
+  alexa: !include alexa.yaml
+
+mqtt:
+  broker: 192.168.86.38
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+# Text to speech
+#tts:
+#  - platform: google_translate
+#    service_name: google_say
+
+weather:
+  - platform: darksky
+    api_key: !secret dark_sky_api_key
+
+nest:
+  client_id: !secret nest_id
+  client_secret: !secret nest_secret
+
+wemo:
+
+tplink:
+
+vacuum:
+  - platform: xiaomi_miio
+    host: 192.168.86.202
+    token: !secret xiaomi_token
+    name: Lobo
+  
+# HUSBZB-1 USB Stick
+zwave: 
+  usb_path: /dev/ttyUSB0
+zha: 
+  usb_path: /dev/ttyUSB1
+  database_path: /config/.storage/zigbee.db
+
+# Xiaomi Gateway
+xiaomi_aqara:
+  discovery_retry: 10
+  gateways:
+    - host: 192.168.86.191
+      key: !secret xiaomi_gateway_key
+
+# Enable ios everything
+ios:
+
+alexa_media:
+  accounts:
+  - email: !secret alexa_email
+    password: !secret alexa_password
+    url: amazon.com
+#    scan_interval: 15
+
+input_select:
+  vacuum_room:
+    name: Choose a room to clean
+    options:
+      - Select Input
+      - Everywhere
+      - Kitchen
+      - Common Area
+      - Main Path
+      - Bedroom
+      - Office
+
+alert: !include alert.yaml
+switch: !include switch.yaml
+light: !include lights.yaml
+group: !include groups.yaml
+scene: !include scenes.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+input_boolean: !include input_booleans.yaml
+zone: !include zones.yaml
+proximity: !include proximity.yaml
+sensor: !include sensors.yaml
+binary_sensor: !include binary_sensors.yaml
+climate: !include climate.yaml

@@ -1,0 +1,11 @@
+home:
+  ignored_zones:
+    - propeller
+    - nike
+    - pge
+    - slalom
+  devices:
+    - device_tracker.ometepe
+    - device_tracker.chibierkriss_iphone
+  tolerance: 50
+  unit_of_measurement: mi

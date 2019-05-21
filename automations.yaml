@@ -1,0 +1,280 @@
+#[]
+
+# Vacation mode for Living Room light
+- alias: 'Vacation Mode for Living Room ON'
+  trigger:
+    platform: sun
+    event: sunset
+    offset: "-00:38:00"
+  condition:
+    condition: state
+    entity_id: input_boolean.vacation_mode
+    state: 'on'
+  action:
+    service: light.turn_on
+    entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe175f74_1
+
+# Vacation mode for Living Room light
+- alias: 'Vacation Mode for Living Room OFF'
+  trigger:
+    platform: sun
+    event: sunset
+    offset: "+02:25:00"
+  condition:
+    condition: state
+    entity_id: input_boolean.vacation_mode
+    state: 'on'
+  action:
+    service: light.turn_off
+    entity_id: light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe175f74_1
+
+# Notify if presence while on vacation mode
+- alias: 'Notify if presence while on vacation mode'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d0001f9b8a1
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: input_boolean.vacation_mode
+    state: 'on'
+  action:
+    service: notify.ios_ometepe
+    data:
+      message: "Motion was detected while on vacation"
+      data:
+        push:
+          category: "vacation_motion"
+        action_data:
+          foo: bar
+
+### Turn on the sensor before turning this back on too
+#- alias: 'AC Turning On'
+#  trigger:
+#    platform: state
+#    entity_id: sensor.adam_headed_home
+#    to: 'towards'
+#    for:
+#      minutes: 4
+#  condition:
+#    condition: numeric_state
+#    entity_id: proximity.home
+#    below: 15
+#  action:
+#    service: notify.ios_ometepe
+#    data:
+##      title: "AC Alert"
+#      message: "It looks like you're headed home. Turn on the AC?"
+#      data:
+#        push:
+#          category: "upstairs_ac_prompt"
+#        action_data:
+#          foo: bar
+
+- alias: Prep The AC
+  trigger:
+    platform: event
+    event_type: ios.notification_action_fired
+    event_data:
+      actionName: turn_on_upstairs_ac
+  action:
+    service: switch.turn_on
+    entity_id: switch.livingroom_ac 
+
+# Notify if Garage Door is left open
+- alias: 'Notify if garage door left open'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.vision_zg8101_garage_door_detector_sensor
+    to: 'on'
+    for:
+      minutes: 5
+  action:
+    service: notify.ios_ometepe
+    data:
+      title: "Duplex Alert"
+      message: "The garage door has been open for 5 minutes"
+      data:
+        subtitle: "The Garage Door is Open"
+
+# Turn on couch light if Anyone comes home after dark
+- alias: 'Adam arrives home after dark'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.device_presence_confidence
+      above: 10
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.sleep_mode
+        state: 'off'
+      - condition: state
+        entity_id: 'sun.sun'
+        state: 'below_horizon'
+  action:
+    service: script.turn_on
+    entity_id: script.chill_lights
+
+
+- alias: Turn on stove light when there is movement
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d0001f9b8a1
+    to: 'on'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: switch.stove
+    - service: homeassistant.turn_on
+      entity_id: light.ledvance_flex_rgbw_00006c6a_1
+
+- alias: Turn off stove light 2 minutes after last movement
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d0001f9b8a1
+    to: 'off'
+    for:
+      minutes: 2
+  action:
+    - service: homeassistant.turn_off
+      entity_id:  switch.stove
+    - service: homeassistant.turn_off
+      entity_id: light.ledvance_flex_rgbw_00006c6a_1
+
+- alias: Turn off all the lights
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.click
+    event_data:
+      entity_id: binary_sensor.switch_158d0002135f15
+      click_type: single
+  action:
+    service: light.turn_off
+    data:
+      entity_id: group.all_lights
+
+- alias: Toggle the noise machine
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.click
+    event_data:
+      entity_id: binary_sensor.switch_158d0002133f82
+      click_type: single
+  action:
+    service: switch.toggle
+    data:
+      entity_id: switch.noise
+
+- alias: Toggle the humidifier
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.click
+    event_data:
+      entity_id: binary_sensor.switch_158d0002133f82
+      click_type: double
+  action:
+    service: switch.toggle
+    data:
+      entity_id: switch.humidifier
+      
+- alias: Toggle office light
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.click
+    event_data:
+      entity_id: binary_sensor.switch_158d00021360b0
+      click_type: single
+  action:
+    service: light.toggle
+    data:
+      entity_id: light.ikea_of_sweden_tradfri_bulb_e26_opal_1000lm_fe4c39ea_1
+      transition: 1
+
+# Turn off all the lights if no one is home
+#- alias: Turn off lights
+#  trigger:
+#    platform: numeric_state
+#    entity_id: proximity.home
+#    above: 1
+#    for:
+#      minutes: 5
+#  action:
+#    service: light.turn_off
+#    data:
+#      entity_id: group.all_lights
+
+- alias: Turn on Humidifier at 6pm
+  trigger:
+    platform: time
+    # Military time format. This trigger will fire at 3:32 PM
+    at: '18:00:00'
+  action:
+    service: switch.turn_on
+    data:
+      entity_id: switch.humidifier
+  condition:
+    - condition: numeric_state
+      entity_id: 'sensor.humidity_158d00022c8d52'
+      below: 50
+
+
+# Publish an MQTT event when the door changes
+- alias: MQTT Event on front door event
+  hide_entity: true
+  trigger:
+    platform: state
+    entity_id: sensor.front_door_sensor
+  action:
+    service: mqtt.publish
+    data_template:
+      topic: 'monitor/scan/depart'
+
+# Publish an MQTT event when the garage door changes
+- alias: MQTT Event on garage door event
+  hide_entity: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.vision_zg8101_garage_door_detector_sensor
+  action:
+    service: mqtt.publish
+    data_template:
+      topic: 'monitor/scan/depart'
+
+- alias: Set theme at startup
+  initial_state: 'on'
+  trigger:
+    - platform: homeassistant
+      event: start
+  action:
+    service: frontend.set_theme
+    data:
+      name: slate
+
+- alias: Start Cleaning Room
+  hide_entity: True
+  trigger:
+  - platform: state
+    entity_id: input_select.vacuum_room
+    from: 'Select Input'
+  action:
+  - service: script.turn_on
+    data_template:
+      entity_id: >
+        {% if is_state("input_select.vacuum_room", "everywhere") %}
+          script.vacuum_start
+        {% elif is_state("input_select.vacuum_room", "kitchen") %}
+          script.vacuum_kitchen
+        {% elif is_state("input_select.vacuum_room", "common area") %}
+          script.vacuum_common
+        {% elif is_state("input_select.vacuum_room", "main path") %}
+          script.vacuum_path
+        {% elif is_state("input_select.vacuum_room", "bedroom") %}
+          script.vacuum_bedroom
+        {% elif is_state("input_select.vacuum_room", "office") %}
+          script.vacuum_office
+        {% else %}
+        {% endif %}
+  - service: input_select.select_option
+    entity_id: input_select.vacuum_room
+    data_template:
+      option: "Select Input"

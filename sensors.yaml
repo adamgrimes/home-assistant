@@ -1,0 +1,216 @@
+- platform: darksky
+  api_key: !secret dark_sky_api_key
+  scan_interval: '00:10:00'
+  monitored_conditions:
+    - temperature
+    - precip_probability
+    - precip_type
+    - humidity
+    - cloud_cover
+    - nearest_storm_distance
+    - precip_intensity
+    - wind_speed
+    - cloud_cover
+    - minutely_summary
+    - temperature_high
+    - temperature_low
+
+- platform: mqtt
+  name: "Hot Tub"
+  state_topic: home-assistant/sensor/hot-hub/state
+  expire_after: 600
+  device_class: temperature
+  unit_of_measurement: '°F'
+  icon: 'mdi:hot-tub'
+
+- platform: mqtt
+  name: "Hot Tub CPU"
+  state_topic: home-assistant/sensor/hot-hub-cpu/state
+  expire_after: 600
+  device_class: temperature
+  unit_of_measurement: '°F'
+  icon: 'mdi:server-network'
+
+###################################################
+### Monitor BT presence
+
+## Ping the sensors to check for presence when the door opens
+- platform: template
+  sensors:
+    front_door_sensor:
+      entity_id: sensor.hank_hkzw_dws01_door_window_sensor_access_control
+      value_template: >-
+        {% if is_state('sensor.hank_hkzw_dws01_door_window_sensor_access_control', '22') %}
+          open
+        {% else %}
+          closed
+        {% endif %}
+      friendly_name: 'Front Door Sensor'
+
+## Presence confidence from each tracker
+- platform: mqtt
+  state_topic: 'monitor/front-window-pi/D4:A3:3D:BD:1E:29'
+  value_template: '{{ value_json.confidence }}'
+  unit_of_measurement: '%'
+  name: 'Adam Front'
+- platform: mqtt
+  state_topic: 'monitor/front-window-pi/40:98:ad:2f:8d:d5'
+  value_template: '{{ value_json.confidence }}'
+  unit_of_measurement: '%'
+  name: 'Kristin Front'
+- platform: mqtt
+  state_topic: 'monitor/front-window-pi/64:c7:53:ba:14:91'
+  value_template: '{{ value_json.confidence }}'
+  unit_of_measurement: '%'
+  name: 'Adam Watch Front'
+- platform: mqtt
+  state_topic: 'monitor/basement-pi/D4:A3:3D:BD:1E:29'
+  value_template: '{{ value_json.confidence }}'
+  unit_of_measurement: '%'
+  name: 'Adam Basement'
+- platform: mqtt
+  state_topic: 'monitor/basement-pi/40:98:ad:2f:8d:d5'
+  value_template: '{{ value_json.confidence }}'
+  unit_of_measurement: '%'
+  name: 'Kristin Basement'
+- platform: mqtt
+  state_topic: 'monitor/basement-pi/64:c7:53:ba:14:91'
+  value_template: '{{ value_json.confidence }}'
+  unit_of_measurement: '%'
+  name: 'Adam Watch Basement'
+
+- platform: min_max
+  name: "Adam Occupancy Confidence"
+  type: max
+  round_digits: 0
+  entity_ids:
+    - sensor.adam_front
+    - sensor.adam_watch_front
+    - sensor.adam_basement
+    - sensor.adam_watch_basement
+
+- platform: min_max
+  name: "Kristin Occupancy Confidence"
+  type: max
+  round_digits: 0
+  entity_ids:
+    - sensor.kristin_front
+    - sensor.kristin_basement
+
+- platform: min_max
+  name: "Device Presence Confidence"
+  type: max
+  round_digits: 0
+  entity_ids:
+    - sensor.adam_front
+    - sensor.adam_watch_front
+    - sensor.kristin_front
+    - sensor.kristin_basement
+    - sensor.adam_basement
+    - sensor.adam_watch_basement
+    
+#- platform: template
+#  sensors:
+#    adam_headed_home:
+#      friendly_name: "Adam Headed Home"
+#      value_template: "{{ state_attr('proximity.home', 'dir_of_travel') }}"
+
+- platform: template
+  sensors:
+    sun_elevation:
+      friendly_name: Sun Elevation
+      value_template: '{{states.sun.sun.attributes.elevation}}'
+      unit_of_measurement: '°'
+
+- platform: template
+  sensors:
+    vacuum_status:
+      friendly_name: Status
+      entity_id:
+        - vacuum.lobo
+      value_template: 'Status: {{ states.vacuum.lobo.attributes.status }}'
+      icon_template: >
+        {% set val =  states.vacuum.lobo.attributes.status  %}
+        {% if val == 'Charging' %}
+          mdi:battery-charging
+        {% elif val == 'Cleaning' %}
+          mdi:move-resize
+        {% elif val == 'Returning home' %}
+          mdi:keyboard-return
+        {% elif val == 'Idle' %}
+          mdi:dots-horizontal
+        {% elif val == 'Paused' %}
+          mdi:pause-circle
+        {% else %}
+          mdi:help-circle
+        {% endif %}
+    vacuum_fan_speed:
+      friendly_name: Fan Speed
+      entity_id:
+        - vacuum.lobo
+      value_template: 'Mode: {{ states.vacuum.lobo.attributes.fan_speed }}'
+      icon_template: 'mdi:speedometer'
+    vacuum_battery:
+      friendly_name: Vacuum Battery
+      entity_id:
+        - vacuum.lobo
+      value_template: 'Battery: {{ states.vacuum.lobo.attributes.battery_level }}'
+      unit_of_measurement: '%'
+      icon_template: '{{ states.vacuum.lobo.attributes.battery_icon }}'
+    vacuum_cleaning_time:
+      friendly_name: Time of Last Cycle
+      entity_id:
+        - vacuum.lobo
+      value_template: '{{ states.vacuum.lobo.attributes.cleaning_time }}'
+      icon_template: 'mdi:timer'
+    vacuum_cleaned_area:
+      friendly_name: Area of Last Cycle
+      unit_of_measurement: 'm ²'
+      entity_id:
+        - vacuum.lobo
+      value_template: '{{ states.vacuum.lobo.attributes.cleaned_area }}'
+      icon_template: 'mdi:ruler'
+    vacuum_cleanmainbrush:
+      friendly_name: Replace main brush
+      unit_of_measurement: 'h'
+      entity_id:
+        - vacuum.lobo
+      value_template: 'Main Brush: {{ states.vacuum.lobo.attributes.main_brush_left }}'
+      icon_template: 'mdi:screwdriver'
+    vacuum_cleansidebrush:
+      friendly_name: Replace side brush
+      unit_of_measurement: 'h'
+      entity_id:
+        - vacuum.lobo
+      value_template: 'Side brush: {{ states.vacuum.lobo.attributes.side_brush_left }}'
+      icon_template: 'mdi:screwdriver'
+    vacuum_cleanfilter:
+      friendly_name: Replace filter
+      unit_of_measurement: 'h'
+      entity_id:
+        - vacuum.lobo
+      value_template: 'Filter: {{ states.vacuum.lobo.attributes.filter_left }}'
+      icon_template: 'mdi:screwdriver'
+    vacuum_sensordirtyleft:
+      friendly_name: Replace filter
+      unit_of_measurement: 'h'
+      entity_id:
+        - vacuum.lobo
+      value_template: 'Sensor: {{ states.vacuum.lobo.attributes.sensor_dirty_left }}'
+      icon_template: 'mdi:screwdriver'
+    vacuum_do_not_disturb:
+      friendly_name: Do Not Disturb
+      entity_id:
+        - vacuum.lobo
+      value_template: '{{ states.vacuum.lobo.attributes.do_not_disturb }}'
+      icon_template: >
+        {% set val =  states.vacuum.lobo.attributes.do_not_disturb  %}
+        {% if val == 'on' %}
+          mdi:do-not-disturb
+        {% else %}
+          mdi:do-not-disturb-off
+        {% endif %}
+    vacuum_operation:
+      value_template: 'Operation'
+    vacuum_accessories:
+      value_template: 'Maintenance'

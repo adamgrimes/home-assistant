@@ -1,0 +1,95 @@
+automation_view:
+  name: Automation
+  entities:
+    - group.all_automations
+    - group.all_scripts
+
+#makeup_light:
+#  name: Makeup Light
+#  entities:
+#    - light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd3ee_1
+#    - light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fedc69ca_1
+
+main_lights:
+  name: Main Lights
+  entities:
+    - light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd3ee_1
+    - light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fedc69ca_1
+    - light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe175f74_1
+
+lights:
+  name: Lights
+  entities:
+    - light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe175f74_1
+#    - group.makeup_light
+    - light.makeup_light
+    - light.ikea_of_sweden_tradfri_bulb_e26_opal_1000lm_fe4c39ea_1
+    - switch.stove
+#    - switch.flux
+
+modes:
+  name: Modes
+  control: hidden
+  entities:
+    - input_boolean.vacation_mode
+    - input_boolean.home_mode
+    - input_boolean.sleep_mode
+
+climate:
+  name: Climate
+  entities:
+    - sensor.living_room_thermostat_temperature
+    - sensor.living_room_thermostat_target
+    - sensor.dark_sky_summary
+    - sensor.dark_sky_apparent_temperature
+    - sensor.temperature_158d00022c8d52
+    - sensor.temperature_158d00022cc891
+    - climate.living_room
+#    - climate.upstairs
+    
+all_scenes:
+  name: Scenes
+  entities: 
+    - scene.movie_lights
+    - scene.selfie_lights
+    - scene.internet_lights
+
+script_scenes:
+  name: Scenes
+  entities:
+    - script.chill_lights
+    - script.movie_lights
+    - script.selfie_lights
+
+devices:
+  name: Devices
+  entities:
+    - switch.noise
+#    - switch.flux
+    - switch.humidifier
+
+
+duplex:
+  name: Duplex
+    - binary_sensor.vision_zg8101_garage_door_detector_sensor
+    - binary_sensor.motion_sensor_158d0001f9b8a1
+
+default_view:
+#new_view:
+  view: yes
+  entities:
+    - device_tracker.ometepe
+    - device_tracker.chibierkriss_iphone
+#    - binary_sensor.duplex_away
+    - binary_sensor.anyone_home
+    - proximity.home
+    - binary_sensor.vision_zg8101_garage_door_detector_sensor
+    - group.duplex
+    - group.lights
+    - group.modes
+    - group.climate
+    - climate.living_room
+#    - group.all_scenes
+    - group.script_scenes
+    - group.devices
+    - media_player.playstation_4

@@ -1,0 +1,7 @@
+# Customize entities that match a pattern
+
+"automation*":
+  hidden: true
+
+"sensor.ometepe_battery*":
+  hidden: true

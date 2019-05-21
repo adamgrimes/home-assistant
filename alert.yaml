@@ -1,0 +1,10 @@
+lost_hot_tub:
+  name: Lost hot tub temp
+  done_message: Found hot tub temp
+  entity_id: sensor.hot_tub
+  state: 'unknown'
+  repeat: 60
+  can_acknowledge: true
+  skip_first: true
+  notifiers:
+    - ios_ometepe

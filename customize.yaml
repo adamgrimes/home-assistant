@@ -1,0 +1,100 @@
+device_tracker.ometepe:
+  friendly_name: Adam
+sensor.garage_door:
+  friendly_name: Garage Door
+binary_sensor.living_room_thermostat_fan:
+  hidden: true
+binary_sensor.living_room_thermostat_has_leaf:
+  hidden: true
+binary_sensor.living_room_thermostat_is_using_emergency_heat:
+  hidden: true
+binary_sensor.living_room_thermostat_online:
+  hidden: true
+binary_sensor.living_room_thermostat_is_locked:
+  hidden: true
+sensor.living_room_thermostat_humidity:
+  friendly_name: Living Room Humidity
+sensor.living_room_thermostat_hvac_state:
+  hidden: true
+sensor.living_room_thermostat_operation_mode:
+  friendly_name: Nest Mode
+sensor.living_room_thermostat_target:
+  friendly_name: Target Temp
+sensor.living_room_thermostat_temperature:
+  friendly_name: Thermostat
+sensor.anks_ipad_battery_level:
+  hidden: true
+sensor.anks_ipad_battery_state:
+  hidden: true
+sensor.temperature_158d00022cc891:
+  friendly_name: Basement Temp
+sensor.pressure_158d00022cc891:
+  friendly_name: Basement Pressure
+sensor.humidity_158d00022cc891:
+  friendly_name: Basement Humidity
+sensor.temperature_158d00022c8d52:
+  friendly_name: Bedroom Temp
+sensor.pressure_158d00022c8d52:
+  friendly_name: Bedroom Pressure
+sensor.humidity_158d00022c8d52:
+  friendly_name: Bedroom Humidity
+light.gateway_light_7811dce18a8e:
+  hidden: true
+binary_sensor.motion_sensor_158d0001f9b8a1:
+  friendly_name: Kitchen Motion
+sensor.illumination_158d0001f9b8a1:
+  friendly_name: Bedroom Illumination
+sensor.illumination_7811dce18a8e:
+  friendly_name: Gateway Illumination
+  hidden: true
+input_boolean.vacation_mode:
+  friendly_name: Vacation
+  icon: mdi:beach
+input_boolean.home_mode:
+  friendly_name: Home
+  icon: mdi:home
+input_boolean.sleep_mode:
+  friendly_name: Sleep
+  icon: mdi:power-sleep
+sensor.dark_sky_summary:
+  friendly_name: Weather Summary
+sensor.dark_sky_apparent_temperature:
+  friendly_name: Outside Temperature
+binary_sensor.vision_zg8101_garage_door_detector_sensor:
+  friendly_name: Garage Door
+  device_class: garage_door
+sensor.vision_zg8101_garage_door_detector_alarm_level:
+  hidden: true
+sensor.vision_zg8101_garage_door_detector_alarm_type:
+  hidden: true
+sensor.vision_zg8101_garage_door_detector_burglar:
+  hidden: true
+sensor.vision_zg8101_garage_door_detector_sourcenodeid:
+  hidden: true
+light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe175f74_1:
+  friendly_name: Couch Light
+  icon: 'mdi:sofa'
+light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd3ee_1:
+  friendly_name: Makeup Light 2
+light.ikea_of_sweden_tradfri_bulb_e26_opal_1000lm_fe4c39ea_1:
+  friendly_name: Office Light
+  icon: 'mdi:keyboard-outline'
+switch.stove:
+  friendly_name: Stove Light
+group.all_scripts:
+  hidden: false
+group.all_switches:
+  hidden: false
+  friendly_name: Switches
+device_tracker.chibierkriss_iphone:
+  friendly_name: Kristin
+binary_sensor.anyone_home:
+  device_class: presence
+light.ledvance_a19_rgbw_0002f70c_1:
+  friendly_name: Bedside
+light.stove:
+  icon: 'mdi:stove'
+light.ledvance_flex_rgbw_00006c6a_1:
+  icon: 'mdi:wall-sconce-flat'
+light.makeup_light:
+  icon: 'mdi:lamp'

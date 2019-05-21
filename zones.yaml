@@ -1,0 +1,23 @@
+- name: Home
+  latitude: 45.5333736
+  longitude: -122.7107627
+  radius: 200
+  icon: mdi:home
+
+- name: New Seasons
+  latitude: 45.533762
+  longitude: -122.698414
+  radius: 65
+  icon: mdi:store
+
+- name: Propeller
+  latitude: 45.5239163
+  longitude: -122.6799766
+  radius: 50
+  icon: mdi:domain
+
+- name: Nike
+  latitude: 45.5455209
+  longitude: -122.8865516
+  radius: 500
+  icon: mdi:domain

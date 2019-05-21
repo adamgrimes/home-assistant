@@ -1,0 +1,9 @@
+  vacation_mode:
+    name: 'Vacation'
+    initial: off
+  home_mode:
+    name: 'Home'
+    initial: off
+  sleep_mode:
+    name: 'Sleep'
+    initial: off

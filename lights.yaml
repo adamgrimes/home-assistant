@@ -1,0 +1,21 @@
+- platform: group
+  name: Makeup Light
+  entities:
+    - light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd3ee_1
+    - light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fedc69ca_1
+
+- platform: switch
+  name: Stove
+  entity_id: switch.stove
+
+- platform: group
+  name: All Lights
+  entities:
+    - light.gateway_light_7811dce18a8e
+    - light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd3ee_1
+    - light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe175f74_1
+    - light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fedc69ca_1
+    - light.ikea_of_sweden_tradfri_bulb_e26_opal_1000lm_fe4c39ea_1
+#    - light.ledvance_a19_rgbw_0002f70c_1
+    - light.ledvance_flex_rgbw_00006c6a_1
+    - light.stove

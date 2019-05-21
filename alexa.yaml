@@ -1,0 +1,56 @@
+filter:
+  include_entities:
+    - vacuum.lobo
+    - sensor.hot_tub
+  exclude_entities:
+    - climate.living_room
+    - light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fedc69ca_1
+    - automation.adam_arrives_home_after_dark
+    - automation.adam_arrives_home_after_dark_2
+    - group.all_scripts
+    - binary_sensor.cube_158d000278d575_2
+    - binary_sensor.motion_sensor_158d0001f9b8a1
+    - binary_sensor.remote_ui
+    - group.all_automations
+    - automation.adam_arrives_home_after_dark
+    - automation.adam_arrives_home_after_dark_2
+    - automation.notify_if_garage_door_left_open
+    - automation.notify_if_presence_while_on_vacation_mode
+    - automation.prep_the_ac
+    - automation.toggle_office_light
+    - automation.toggle_the_humidifier
+    - automation.toggle_the_noise_machine
+    - automation.turn_off_all_the_lights
+    - automation.turn_off_stove_light_2_minutes_after_last_movement
+    - automation.turn_on_humidifier_at_6pm
+    - automation.turn_on_stove_light_when_there_is_movement
+    - automation.vacation_mode_for_living_room_off
+    - automation.vacation_mode_for_living_room_on
+    - device_tracker.chibierkriss_iphone
+    - device_tracker.ometepe
+    - group.all_devices
+    - group.all_scenes
+    - group.all_switches
+    - group.all_vacuum_cleaners
+    - group.default_view
+    - group.devices
+    - group.duplex
+    - group.modes
+    - group.script_scenes
+    - light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd3ee_1
+    - sensor.anks_ipad_battery_level
+    - sensor.anks_ipad_battery_state
+    - sensor.chibierkriss_iphone_battery_level
+    - sensor.chibierkriss_iphone_battery_state
+    - sensor.ometepe_battery_level
+    - sensor.ometepe_battery_state
+    - climate.living_room
+entity_config:
+  switch.stove:
+    name: Stove Light
+    description: Stove Light
+    display_categories: LIGHT
+  sensor.hot_tub:
+    name: Hot Tub
+    description: Hot Tub Termometer
+    display_categories: TEMPERATURE_SENSOR
