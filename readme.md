@@ -1,29 +1,36 @@
 # Duplex Home Assistant Configuration
 Configuration for Home Assistant (https://home-assistant.io/)
 
+## Overview
+ * Running on a KVM virtual machine on the homelab rack server
+ * Raspberry Pi Zero W with camera for outside monitoring
+ * 2 Raspberry Pis with bluetooth for full house presence monitoring
+ * Raspberry Pi for hot-tub temperature monitoring
+
 ## Integrations in use:
 
- * Running on Raspberry Pi 3B+
- * Linear HUSBZB-1 Zigbee/Z-Wave stick
- * Xiaomi hub - motion/temperature sensors
+ * Linear HUSBZB-1 Zigbee/Z-Wave stick - lights and door sensors
+ * Xiaomi hub - motion & temperature sensors
  * Nest - climate control
- * Flux - lighting temperature
+ * Alexa - notifications, control, and media
  * Darksky - weather
  * iOS - presence and notifications
+ * BLE monitor - presence
+ * Xiaomi vacuum
 
-## Automations
+## Notes
 
-### Persistent
+### Naba Casa
+Lazy Alexa integration
+https://www.nabucasa.com/config/amazon_alexa/
 
- * Turn of office light if motion. Turn off if 3 minutes of inactivity
- * Send notification if garage door is left open for 5 minutes
- * Turn on lights if coming home after dark
+### Alexa media
+Custom component to push notifications to Alexa and control media from the UI
+https://github.com/keatontaylor/alexa_media_player/
 
-### Vacation Mode
+### BLE Monitor
+Monitor device presence using bluetooth scans
+https://github.com/andrewjfreyer/monitor/
 
- * Turn on and randomize lights
- * Send notification if presence detected
-
-## Notifications
-
- * Notify if headed home, to manually turn on climate
+### Custom Hot-tub Temperature Sensor - TEMPer1F
+Raspberry pi with external temperature sensor pushing updates over MQTT
