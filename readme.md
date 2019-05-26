@@ -2,7 +2,7 @@
 Configuration for Home Assistant (https://home-assistant.io/)
 
 ## Overview
- * Running on a KVM virtual machine on the homelab rack server
+ * Running on a KVM virtual machine on the homelab rack server, ProLiant DL385 G7 6176
  * Raspberry Pi Zero W with camera for outside monitoring
  * 2 Raspberry Pis with bluetooth for full house presence monitoring
  * Raspberry Pi for hot-tub temperature monitoring

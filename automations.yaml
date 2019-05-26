@@ -260,17 +260,17 @@
   - service: script.turn_on
     data_template:
       entity_id: >
-        {% if is_state("input_select.vacuum_room", "everywhere") %}
+        {% if is_state("input_select.vacuum_room", "Everywhere") %}
           script.vacuum_start
-        {% elif is_state("input_select.vacuum_room", "kitchen") %}
+        {% elif is_state("input_select.vacuum_room", "Kitchen") %}
           script.vacuum_kitchen
-        {% elif is_state("input_select.vacuum_room", "common area") %}
+        {% elif is_state("input_select.vacuum_room", "Cmmon area") %}
           script.vacuum_common
-        {% elif is_state("input_select.vacuum_room", "main path") %}
+        {% elif is_state("input_select.vacuum_room", "Main Path") %}
           script.vacuum_path
-        {% elif is_state("input_select.vacuum_room", "bedroom") %}
+        {% elif is_state("input_select.vacuum_room", "Bedroom") %}
           script.vacuum_bedroom
-        {% elif is_state("input_select.vacuum_room", "office") %}
+        {% elif is_state("input_select.vacuum_room", "Office") %}
           script.vacuum_office
         {% else %}
         {% endif %}

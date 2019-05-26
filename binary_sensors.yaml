@@ -5,6 +5,18 @@
       friendly_name: "Anyone Home"
       value_template: >-
         {{ states('sensor.device_presence_confidence') | float > 10 }}
+    hot_tub_cold:
+      value_template: >-
+        {{ sensor.hot_tub < 100 }}
+
+- platform: trend
+  sensors:
+    hot_tub_falling:
+      entity_id: sensor.hot_tub
+      sample_duration: 7200
+      min_gradient: -0.0008
+      device_class: cold
+
 
 #- platform: bayesian
 #  name: Anyone Home

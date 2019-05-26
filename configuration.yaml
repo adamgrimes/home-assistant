@@ -94,6 +94,17 @@ xiaomi_aqara:
 # Enable ios everything
 ios:
 
+ifttt:
+  key: cr2j5oUISiOunaBl-yoN6b
+
+notify:
+  - name: voice_notification
+    platform: rest
+    resource: https://api.notifymyecho.com/v1/NotifyMe
+    data: !secret notifyme_key
+    message_param_name: 'notification'
+
+
 alexa_media:
   accounts:
   - email: !secret alexa_email

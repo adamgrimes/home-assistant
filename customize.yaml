@@ -73,12 +73,12 @@ sensor.vision_zg8101_garage_door_detector_sourcenodeid:
   hidden: true
 light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe175f74_1:
   friendly_name: Couch Light
-  icon: 'mdi:sofa'
+  icon: mdi:sofa
 light.ikea_of_sweden_tradfri_bulb_e26_ws_opal_980lm_fe0bd3ee_1:
   friendly_name: Makeup Light 2
 light.ikea_of_sweden_tradfri_bulb_e26_opal_1000lm_fe4c39ea_1:
   friendly_name: Office Light
-  icon: 'mdi:keyboard-outline'
+  icon: mdi:keyboard-outline
 switch.stove:
   friendly_name: Stove Light
 group.all_scripts:
@@ -93,8 +93,10 @@ binary_sensor.anyone_home:
 light.ledvance_a19_rgbw_0002f70c_1:
   friendly_name: Bedside
 light.stove:
-  icon: 'mdi:stove'
+  icon: mdi:stove
 light.ledvance_flex_rgbw_00006c6a_1:
-  icon: 'mdi:wall-sconce-flat'
+  icon: mdi:wall-sconce-flat
 light.makeup_light:
-  icon: 'mdi:lamp'
+  icon: mdi:lamp
+sensor.front_door_sensor:
+  icon: mdi:door
