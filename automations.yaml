@@ -278,3 +278,82 @@
     entity_id: input_select.vacuum_room
     data_template:
       option: "Select Input"
+
+- alias: Turn off lights three minutes after night mode
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: input_boolean.sleep_mode
+      to: 'on'
+  action:
+    - delay: 0:05
+    - service: light.turn_off
+      entity_id: light.all_lights
+
+- alias: Turn on night mode
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: switch.noise
+      to: 'on'
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.kristin_occupancy_confidence
+      above: 80
+    - condition: numeric_state
+      entity_id: sensor.adam_occupancy_confidence
+      above: 80
+    - condition: time
+      after: '20:00:00'
+  action:
+    service: homeassistant.turn_on
+    entity_id: input_boolean.sleep_mode
+
+- alias: Notify on trash day
+  hide_entity: True
+  trigger:
+    - platform: time
+      at: '20:00:00'
+  condition:
+    condition: time
+    weekday: 
+      - 'mon'
+  action:
+    - service: notify.voice_notification
+      data:
+        message: Don't forget to take the trash to the curb
+
+- alias: Turn off night mode if kitchen motion in the morning
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001f9b8a1
+      to: 'on'
+  condition:
+    condition: time
+    after: '05:00:00'
+  action:
+    service: homeassistant.turn_off
+    entity_id: input_boolean.sleep_mode
+
+- alias: Notify if hot tub temperature is falling
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: binary_sensor.hot_tub_falling
+    to: 'on'
+    for:
+      minutes: 120
+  condition:
+    condition: state
+    entity_id: binary_sensor.hot_tub_cold
+    state: 'on'
+  action:
+    - service: notify.voice_notification
+      data:
+        message: The hot tub is starting to cool off
+    - service: notify.ios_ometepe
+      data:
+        title: "Duplex Notification"
+        message: "The hot tub is starting to cool off"
+
