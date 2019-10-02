@@ -5,7 +5,7 @@ home:
     - pge
     - slalom
   devices:
-    - device_tracker.ometepe
+    - device_tracker.iphone_3
     - device_tracker.chibierkriss_iphone
   tolerance: 50
   unit_of_measurement: mi

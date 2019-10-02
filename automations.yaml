@@ -39,7 +39,7 @@
     entity_id: input_boolean.vacation_mode
     state: 'on'
   action:
-    service: notify.ios_ometepe
+    service: notify.iphone_3
     data:
       message: "Motion was detected while on vacation"
       data:
@@ -90,7 +90,7 @@
     for:
       minutes: 5
   action:
-    service: notify.ios_ometepe
+    service: notify.iphone_3
     data:
       title: "Duplex Alert"
       message: "The garage door has been open for 5 minutes"
@@ -397,3 +397,20 @@
     - service: mqtt.publish
       data:
         topic: cmnd/sonoffs/POWER4
+
+- alias: "Turn on heater in the morning"
+  trigger:
+    platform: time
+    at: "06:30:00"
+  condition: 
+    - condition: numeric_state
+      entity_id: sensor.temperature_158d00022c8d52
+      below: 65
+    - condition: state
+      entity_id: binary_sensor.anyone_home
+      state: 'on'
+  action:
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.remotec_zts_500us_heating_1_2
+        temperature: 69

@@ -26,6 +26,8 @@ discovery:
   ignore:
     - plex_mediaserver
 homekit:
+hacs:
+  token:  9725c540c1461eb7573593b4baf095e0f2802761
 
 # Add Cloud9 web based IDE
 #panel_iframe:
@@ -112,11 +114,11 @@ notify:
     message_param_name: 'notification'
 
 
-alexa_media:
-  accounts:
-  - email: !secret alexa_email
-    password: !secret alexa_password
-    url: amazon.com
+#alexa_media:
+#  accounts:
+#  - email: !secret alexa_email
+#    password: !secret alexa_password
+#    url: amazon.com
 #    scan_interval: 15
 
 input_select:

@@ -78,7 +78,7 @@ default_view:
 #new_view:
   view: yes
   entities:
-    - device_tracker.ometepe
+    - device_tracker.iphone_3
     - device_tracker.chibierkriss_iphone
 #    - binary_sensor.duplex_away
     - binary_sensor.anyone_home

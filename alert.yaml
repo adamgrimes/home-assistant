@@ -1,23 +1,23 @@
-lost_hot_tub:
-  name: Lost hot tub temp
-  done_message: Found hot tub temp
-  entity_id: sensor.hot_tub
-  state: 'unknown'
-  repeat: 60
-  can_acknowledge: true
-  skip_first: true
-  notifiers:
-    - ios_ometepe
-
-hot_tub_cooling:
-  name: Hot Tub Temperature Dropping
-  done_message: Hot Tub is heated
-  entity_id: binary_sensor.hot_tub_cold
-  repeat:
-    - 60
-    - 120
-    - 1440
-  can_acknowledge: true
-  skip_first: true
-  notifiers:
-    - ios_ometepe
+#lost_hot_tub:
+#  name: Lost hot tub temp
+#  done_message: Found hot tub temp
+#  entity_id: sensor.hot_tub
+#  state: 'unknown'
+#  repeat: 60
+#  can_acknowledge: true
+#  skip_first: true
+#  notifiers:
+#    - ios_ometepe
+#
+#hot_tub_cooling:
+#  name: Hot Tub Temperature Dropping
+#  done_message: Hot Tub is heated
+#  entity_id: binary_sensor.hot_tub_cold
+#  repeat:
+#    - 60
+#    - 120
+#    - 1440
+#  can_acknowledge: true
+#  skip_first: true
+#  notifiers:
+#    - ios_ometepe

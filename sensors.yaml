@@ -41,15 +41,15 @@
       entity_id: sensor.hank_hkzw_dws01_door_window_sensor_access_control
       value_template: >-
         {% if is_state('sensor.hank_hkzw_dws01_door_window_sensor_access_control', '22') %}
-          open
+          Open
         {% else %}
-          closed
+          Closed
         {% endif %}
       friendly_name: 'Front Door Sensor'
 
 ## Presence confidence from each tracker
 - platform: mqtt
-  state_topic: 'monitor/front-window-pi/D4:A3:3D:BD:1E:29'
+  state_topic: 'monitor/front-window-pi/CC:D2:81:2E:AF:00'
   value_template: '{{ value_json.confidence }}'
   unit_of_measurement: '%'
   name: 'Adam Front'
@@ -64,7 +64,7 @@
   unit_of_measurement: '%'
   name: 'Adam Watch Front'
 - platform: mqtt
-  state_topic: 'monitor/basement-pi/D4:A3:3D:BD:1E:29'
+  state_topic: 'monitor/basement-pi/CC:D2:81:2E:AF:00'
   value_template: '{{ value_json.confidence }}'
   unit_of_measurement: '%'
   name: 'Adam Basement'
