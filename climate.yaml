@@ -11,6 +11,6 @@
    ac_mode: true
    heater: switch.bedroom_ac
    target_sensor: sensor.temperature_158d00022c8d52
-   away_temp: 35
+   #   away_temp: 35
    min_cycle_duration:
-     minutes: 15
+     minutes: 12

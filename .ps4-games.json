@@ -1,8 +1,50 @@
 {
-    "CUSA00129": "Netflix",
-    "CUSA00130": "Amazon Prime Video",
-    "CUSA01015": "YouTube",
-    "CUSA01567": "HBO GO\u00ae",
-    "CUSA05223": "HBO NOW",
-    "CUSA09311": "Assassin's Creed\u00ae Odyssey"
+    "CUSA00129": {
+        "locked": false,
+        "media_content_type": "game",
+        "media_image_url": null,
+        "media_title": "Netflix"
+    },
+    "CUSA00130": {
+        "locked": false,
+        "media_content_type": "game",
+        "media_image_url": null,
+        "media_title": "Amazon Prime Video"
+    },
+    "CUSA00553": {
+        "locked": false,
+        "media_content_type": "game",
+        "media_image_url": null,
+        "media_title": "The Last of Us\u2122 Left Behind Remastered"
+    },
+    "CUSA01015": {
+        "locked": false,
+        "media_content_type": "game",
+        "media_image_url": null,
+        "media_title": "YouTube"
+    },
+    "CUSA01567": {
+        "locked": false,
+        "media_content_type": "game",
+        "media_image_url": null,
+        "media_title": "HBO GO\u00ae"
+    },
+    "CUSA02299": {
+        "locked": false,
+        "media_content_type": "game",
+        "media_image_url": null,
+        "media_title": "Marvel's Spider-Man: Game of the Year Edition"
+    },
+    "CUSA05223": {
+        "locked": false,
+        "media_content_type": "game",
+        "media_image_url": null,
+        "media_title": "HBO NOW"
+    },
+    "CUSA09311": {
+        "locked": false,
+        "media_content_type": "game",
+        "media_image_url": null,
+        "media_title": "Assassin's Creed\u00ae Odyssey"
+    }
 }

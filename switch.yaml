@@ -1,17 +1,18 @@
+#- platform: broadlink
+#  host: 192.168.86.195
+#  mac: '34:ea:34:bb:12:2b'
+#  friendly_name: Air Conditioner
+#  type: rm_mini
+#  switches:
+#    livingroom_ac:
+#      friendly_name: "Air Conditioner"
+#      command_on: 'JgBYAAABJZQVEBQRFBETNxQRExEUERQRFDYVEBQ2FRAUNhU1FTUVNRU1FRAVEBUQFTUVEBUQFBEUEBU1FTYUNhUQFDYVNRU1FQAFUAABKEcVAAxpAAEmRxQADQU=='
+#      command_off: 'JgBYAAABJZQVEBQRFBETNxQRExEUERQRFDYVEBQ2FRAUNhU1FTUVNRU1FRAVEBUQFTUVEBUQFBEUEBU1FTYUNhUQFDYVNRU1FQAFUAABKEcVAAxpAAEmRxQADQU=='
+
+
 - platform: broadlink
+  #  host: 192.168.86.21
   host: 192.168.86.195
-  mac: '34:ea:34:bb:12:2b'
-  friendly_name: Air Conditioner
-  type: rm_mini
-  switches:
-    livingroom_ac:
-      friendly_name: "Air Conditioner"
-      command_on: 'JgBYAAABJZQVEBQRFBETNxQRExEUERQRFDYVEBQ2FRAUNhU1FTUVNRU1FRAVEBUQFTUVEBUQFBEUEBU1FTYUNhUQFDYVNRU1FQAFUAABKEcVAAxpAAEmRxQADQU=='
-      command_off: 'JgBYAAABJZQVEBQRFBETNxQRExEUERQRFDYVEBQ2FRAUNhU1FTUVNRU1FRAVEBUQFTUVEBUQFBEUEBU1FTYUNhUQFDYVNRU1FQAFUAABKEcVAAxpAAEmRxQADQU=='
-
-
-- platform: broadlink
-  host: 192.168.86.21
   mac: '78:0f:77:00:79:02'
   friendly_name: Bedroom AC
   type: rm_mini
@@ -52,3 +53,53 @@
 #      command_off: 'npx ps4-waker standby -d 192.168.86.29 -c /home/pi/.ps4-wake.credentials.json'
 #      command_state: 'nc -z -w 5 192.168.86.29 9295'
 #      friendly_name: "PS4"
+#
+- platform: mqtt
+  name: "bedroom power 1"
+  state_topic: "stat/bedroom_power/RESULT"
+  value_template: "{{ value_json.POWER1 }}"
+  command_topic: "cmnd/bedroom_power/POWER1"
+  availability_topic: "tele/bedroom_power/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+- platform: mqtt
+  name: "bedroom power 2"
+  state_topic: "stat/bedroom_power/RESULT"
+  value_template: "{{ value_json.POWER2 }}"
+  command_topic: "cmnd/bedroom_power/POWER2"
+  availability_topic: "tele/bedroom_power/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+- platform: mqtt
+  name: "bedroom power 3"
+  state_topic: "stat/bedroom_power/RESULT"
+  value_template: "{{ value_json.POWER3 }}"
+  command_topic: "cmnd/bedroom_power/POWER3"
+  availability_topic: "tele/bedroom_power/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+- platform: mqtt
+  name: "bedroom power 4"
+  state_topic: "stat/bedroom_power/RESULT"
+  value_template: "{{ value_json.POWER4 }}"
+  command_topic: "cmnd/bedroom_power/POWER4"
+  availability_topic: "tele/bedroom_power/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+

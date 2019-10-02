@@ -34,3 +34,12 @@ https://github.com/andrewjfreyer/monitor/
 
 ### Custom Hot-tub Temperature Sensor - TEMPer1F
 Raspberry pi with external temperature sensor pushing updates over MQTT
+
+## To Upgrade
+
+ * Update docker-compse.yaml with the new image version
+ * `docker-compose down`
+ * `docker-compose up`
+ * ctrl-z
+ * `bg`
+ * `disown`

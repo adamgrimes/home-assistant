@@ -100,3 +100,7 @@ light.makeup_light:
   icon: mdi:lamp
 sensor.front_door_sensor:
   icon: mdi:door
+switch.bedroom_power_1:
+  friendly_name: Noise
+switch.bedroom_power_2:
+  friendly_name: Humidifier

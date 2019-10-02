@@ -122,6 +122,10 @@
     platform: state
     entity_id: binary_sensor.motion_sensor_158d0001f9b8a1
     to: 'on'
+  condition:
+    - condition: state
+      entity_id: input_boolean.sleep_mode
+      state: 'off'
   action:
     - service: homeassistant.turn_on
       entity_id: switch.stove
@@ -163,7 +167,7 @@
   action:
     service: switch.toggle
     data:
-      entity_id: switch.noise
+      entity_id: switch.bedroom_power_1
 
 - alias: Toggle the humidifier
   trigger:
@@ -175,7 +179,7 @@
   action:
     service: switch.toggle
     data:
-      entity_id: switch.humidifier
+      entity_id: switch.bedroom_power_2
       
 - alias: Toggle office light
   trigger:
@@ -211,12 +215,25 @@
   action:
     service: switch.turn_on
     data:
-      entity_id: switch.humidifier
+      entity_id: switch.bedroom_power_2
   condition:
     - condition: numeric_state
       entity_id: 'sensor.humidity_158d00022c8d52'
-      below: 50
+      below: 30
 
+- alias: Turn on Bedroom AC at 8pm
+  trigger:
+    platform: time
+    # Military time format. This trigger will fire at 3:32 PM
+    at: '18:00:00'
+  action:
+    service: climate.turn_on
+    data:
+      entity_id: climate.bedroom_ac
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.temperature_158d00022c8d52
+      above: 71
 
 # Publish an MQTT event when the door changes
 - alias: MQTT Event on front door event
@@ -330,30 +347,53 @@
       entity_id: binary_sensor.motion_sensor_158d0001f9b8a1
       to: 'on'
   condition:
-    condition: time
-    after: '05:00:00'
+    condition: state
+    entity_id: 'sun.sun'
+    state: 'below_horizon'
   action:
     service: homeassistant.turn_off
     entity_id: input_boolean.sleep_mode
 
-- alias: Notify if hot tub temperature is falling
-  hide_entity: True
-  trigger:
-    platform: state
-    entity_id: binary_sensor.hot_tub_falling
-    to: 'on'
-    for:
-      minutes: 120
-  condition:
-    condition: state
-    entity_id: binary_sensor.hot_tub_cold
-    state: 'on'
-  action:
-    - service: notify.voice_notification
-      data:
-        message: The hot tub is starting to cool off
-    - service: notify.ios_ometepe
-      data:
-        title: "Duplex Notification"
-        message: "The hot tub is starting to cool off"
+#- alias: Notify if hot tub temperature is falling
+#  hide_entity: True
+#  trigger:
+#    platform: state
+#    entity_id: binary_sensor.hot_tub_falling
+#    to: 'on'
+#    for:
+#      minutes: 120
+#  condition:
+#    condition: state
+#    entity_id: binary_sensor.hot_tub_cold
+#    state: 'on'
+#  action:
+#    - service: notify.voice_notification
+#      data:
+#        message: The hot tub is starting to cool off
+#    - service: notify.ios_ometepe
+#      data:
+#        title: "Duplex Notification"
+#        message: "The hot tub is starting to cool off"
 
+# Poll Sonoff power strip for current states
+- alias: "Power state on HA start-up"
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "cmnd/sonoffs/state"
+        payload: ""
+    - service: mqtt.publish
+      data:
+        topic: cmnd/sonoffs/POWER1
+    - service: mqtt.publish
+      data:
+        topic: cmnd/sonoffs/POWER2
+    - service: mqtt.publish
+      data:
+        topic: cmnd/sonoffs/POWER3  
+    - service: mqtt.publish
+      data:
+        topic: cmnd/sonoffs/POWER4

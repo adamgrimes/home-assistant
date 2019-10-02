@@ -35,10 +35,14 @@ homekit:
 #    url: /:8181
 
 cloud:
-  alexa: !include alexa.yaml
+#  alexa: !include alexa.yaml
 
-mqtt:
-  broker: 192.168.86.38
+# MQTT Moved to UI configuration
+#mqtt:
+#  broker: 192.168.86.38
+#  password: !secret mqtt_password
+#  discovery: true
+#  discovery_prefix: homeassistant
 
 # Allows you to issue voice commands from the frontend in enabled browsers
 #conversation:
@@ -69,6 +73,8 @@ nest:
   client_secret: !secret nest_secret
 
 wemo:
+  static:
+    - 192.168.86.33
 
 tplink:
 
