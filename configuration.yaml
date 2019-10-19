@@ -25,6 +25,7 @@ system_health:
 discovery:
   ignore:
     - plex_mediaserver
+    - igd
 homekit:
 hacs:
   token:  9725c540c1461eb7573593b4baf095e0f2802761
@@ -35,9 +36,23 @@ hacs:
 #    title: IDE
 #    icon: mdi:code-braces
 #    url: /:8181
+pi_hole:
+  host: '192.168.86.20'
 
 cloud:
 #  alexa: !include alexa.yaml
+
+person:
+  - name: Adam
+    id: adamg
+    user_id: 2412fe4324474ecc8b252a2da90e67b1
+    device_trackers:
+      - device_tracker.iphone
+  - name: Kristin
+    id: kristinp
+    user_id: 3419fab22882483496210af1a9006b1a
+    device_trackers:
+      - device_tracker.chibierkriss_iphone
 
 # MQTT Moved to UI configuration
 #mqtt:
@@ -70,9 +85,9 @@ weather:
   - platform: darksky
     api_key: !secret dark_sky_api_key
 
-nest:
-  client_id: !secret nest_id
-  client_secret: !secret nest_secret
+#nest:
+#  client_id: !secret nest_id
+#  client_secret: !secret nest_secret
 
 wemo:
   static:
@@ -133,7 +148,7 @@ input_select:
       - Bedroom
       - Office
 
-alert: !include alert.yaml
+#alert: !include alert.yaml
 switch: !include switch.yaml
 light: !include lights.yaml
 group: !include groups.yaml
@@ -145,4 +160,4 @@ zone: !include zones.yaml
 proximity: !include proximity.yaml
 sensor: !include sensors.yaml
 binary_sensor: !include binary_sensors.yaml
-climate: !include climate.yaml
+#climate: !include climate.yaml

@@ -6,25 +6,25 @@
       value_template: >-
         {{ states('sensor.device_presence_confidence') | float > 10 }}
 
-- platform: template
-  sensors:
-    hot_tub_cold:
-      value_template: >-
-        {{ states('sensor.hot_tub') | float < 100 }}
-
-- platform: trend
-  sensors:
-    hot_tub_falling:
-      entity_id: sensor.hot_tub
-      sample_duration: 7200
-      min_gradient: -0.0008
-      device_class: cold
-
-- platform: template
-  sensors:
-    outside_temp:
-      value_template: >-
-        {{ states('weather.dark_sky.temperature') | float }}
+#- platform: template
+#  sensors:
+#    hot_tub_cold:
+#      value_template: >-
+#        {{ states('sensor.hot_tub') | float < 100 }}
+#
+#- platform: trend
+#  sensors:
+#    hot_tub_falling:
+#      entity_id: sensor.hot_tub
+#      sample_duration: 7200
+#      min_gradient: -0.0008
+#      device_class: cold
+#
+#- platform: template
+#  sensors:
+#    outside_temp:
+#      value_template: >-
+#        {{ states('weather.dark_sky.temperature') | float }}
 
 #- platform: bayesian
 #  name: Anyone Home

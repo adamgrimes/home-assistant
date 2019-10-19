@@ -50,9 +50,6 @@ sensor.illumination_7811dce18a8e:
 input_boolean.vacation_mode:
   friendly_name: Vacation
   icon: mdi:beach
-input_boolean.home_mode:
-  friendly_name: Home
-  icon: mdi:home
 input_boolean.sleep_mode:
   friendly_name: Sleep
   icon: mdi:power-sleep

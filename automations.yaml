@@ -39,14 +39,15 @@
     entity_id: input_boolean.vacation_mode
     state: 'on'
   action:
-    service: notify.iphone_3
+    service: notify.mobile_app_iphone
     data:
-      message: "Motion was detected while on vacation"
-      data:
-        push:
-          category: "vacation_motion"
-        action_data:
-          foo: bar
+      title: "Alert: motion detected"
+      message: "Motion was detected in the kitchen while on vacation"
+#      data:
+#        push:
+#          category: "vacation_motion"
+#        action_data:
+#          foo: bar
 
 ### Turn on the sensor before turning this back on too
 #- alias: 'AC Turning On'
@@ -71,15 +72,15 @@
 #        action_data:
 #          foo: bar
 
-- alias: Prep The AC
-  trigger:
-    platform: event
-    event_type: ios.notification_action_fired
-    event_data:
-      actionName: turn_on_upstairs_ac
-  action:
-    service: switch.turn_on
-    entity_id: switch.livingroom_ac 
+#- alias: Prep The AC
+#  trigger:
+#    platform: event
+#    event_type: ios.notification_action_fired
+#    event_data:
+#      actionName: turn_on_upstairs_ac
+#  action:
+#    service: switch.turn_on
+#    entity_id: switch.livingroom_ac 
 
 # Notify if Garage Door is left open
 - alias: 'Notify if garage door left open'
@@ -90,15 +91,17 @@
     for:
       minutes: 5
   action:
-    service: notify.iphone_3
-    data:
-      title: "Duplex Alert"
-      message: "The garage door has been open for 5 minutes"
+    - service: notify.mobile_app_iphone
       data:
-        subtitle: "The Garage Door is Open"
+        title: "Alert: Garage door is open"
+        message: "The garage door has been open for 5 minutes"
+    - service: notify.mobile_app_chibierkriss_iphone
+      data:
+        title: "Alert: Garage door is open"
+        message: "The garage door has been open for 5 minutes"
 
 # Turn on couch light if Anyone comes home after dark
-- alias: 'Adam arrives home after dark'
+- alias: 'Anayone arrives home after dark'
   trigger:
     - platform: numeric_state
       entity_id: sensor.device_presence_confidence
@@ -126,19 +129,22 @@
     - condition: state
       entity_id: input_boolean.sleep_mode
       state: 'off'
+    - condition: state
+      entity_id: input_boolean.vacation_mode
+      state: 'off'
   action:
     - service: homeassistant.turn_on
       entity_id: switch.stove
     - service: homeassistant.turn_on
       entity_id: light.ledvance_flex_rgbw_00006c6a_1
 
-- alias: Turn off stove light 2 minutes after last movement
+- alias: Turn off stove light after last movement
   trigger:
     platform: state
     entity_id: binary_sensor.motion_sensor_158d0001f9b8a1
     to: 'off'
     for:
-      minutes: 2
+      minutes: 1 
   action:
     - service: homeassistant.turn_off
       entity_id:  switch.stove
@@ -210,7 +216,6 @@
 - alias: Turn on Humidifier at 6pm
   trigger:
     platform: time
-    # Military time format. This trigger will fire at 3:32 PM
     at: '18:00:00'
   action:
     service: switch.turn_on
@@ -219,21 +224,24 @@
   condition:
     - condition: numeric_state
       entity_id: 'sensor.humidity_158d00022c8d52'
-      below: 30
+      below: 40
+    - condition: state
+      entity_id: input_boolean.vacation_mode
+      state: 'off'
 
-- alias: Turn on Bedroom AC at 8pm
-  trigger:
-    platform: time
-    # Military time format. This trigger will fire at 3:32 PM
-    at: '18:00:00'
-  action:
-    service: climate.turn_on
-    data:
-      entity_id: climate.bedroom_ac
-  condition:
-    - condition: numeric_state
-      entity_id: sensor.temperature_158d00022c8d52
-      above: 71
+#- alias: Turn on Bedroom AC at 8pm
+#  trigger:
+#    platform: time
+#    # Military time format. This trigger will fire at 3:32 PM
+#    at: '18:00:00'
+#  action:
+#    service: climate.turn_on
+#    data:
+#      entity_id: climate.bedroom_ac
+#  condition:
+#    - condition: numeric_state
+#      entity_id: sensor.temperature_158d00022c8d52
+#      above: 71
 
 # Publish an MQTT event when the door changes
 - alias: MQTT Event on front door event
@@ -296,30 +304,31 @@
     data_template:
       option: "Select Input"
 
-- alias: Turn off lights three minutes after night mode
+- alias: Set the house to sleep mode
   hide_entity: True
   trigger:
     - platform: state
       entity_id: input_boolean.sleep_mode
       to: 'on'
   action:
-    - delay: 0:05
     - service: light.turn_off
       entity_id: light.all_lights
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.remotec_zts_500us_heating_1_2
+        temperature: 60
+        hvac_mode: heat
 
 - alias: Turn on night mode
   hide_entity: True
   trigger:
     - platform: state
-      entity_id: switch.noise
+      entity_id: switch.bedroom_power_1
       to: 'on'
   condition:
-    - condition: numeric_state
-      entity_id: sensor.kristin_occupancy_confidence
-      above: 80
-    - condition: numeric_state
-      entity_id: sensor.adam_occupancy_confidence
-      above: 80
+    - condition: state
+      entity_id: binary_sensor.anyone_home
+      state: 'on'
     - condition: time
       after: '20:00:00'
   action:
@@ -332,13 +341,20 @@
     - platform: time
       at: '20:00:00'
   condition:
-    condition: time
-    weekday: 
-      - 'mon'
+    - condition: time
+      weekday: 
+        - 'mon'
+    - condition: state
+      entity_id: input_boolean.vacation_mode
+      state: 'off'
   action:
     - service: notify.voice_notification
       data:
         message: Don't forget to take the trash to the curb
+    - service: notify.mobile_app_iphone
+      data:
+        title: "Notice: Trash day"
+        message: "Don't forget to take the trash to the curb"
 
 - alias: Turn off night mode if kitchen motion in the morning
   hide_entity: True
@@ -347,12 +363,17 @@
       entity_id: binary_sensor.motion_sensor_158d0001f9b8a1
       to: 'on'
   condition:
-    condition: state
-    entity_id: 'sun.sun'
-    state: 'below_horizon'
+    - condition: time
+      after: "5:00:00"
+    - condition: time
+      before: "11:00:00"
   action:
-    service: homeassistant.turn_off
-    entity_id: input_boolean.sleep_mode
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.sleep_mode
+    - service: homeassistant.turn_on
+      entity_id: switch.stove
+    - service: homeassistant.turn_on
+      entity_id: light.ledvance_flex_rgbw_00006c6a_1
 
 #- alias: Notify if hot tub temperature is falling
 #  hide_entity: True
@@ -401,16 +422,59 @@
 - alias: "Turn on heater in the morning"
   trigger:
     platform: time
-    at: "06:30:00"
+    at: "6:30:00"
   condition: 
     - condition: numeric_state
       entity_id: sensor.temperature_158d00022c8d52
-      below: 65
+      below: 69
     - condition: state
       entity_id: binary_sensor.anyone_home
       state: 'on'
+    - condition: state
+      entity_id: input_boolean.vacation_mode
+      state: 'off'
   action:
     - service: climate.set_temperature
       data:
         entity_id: climate.remotec_zts_500us_heating_1_2
-        temperature: 69
+        temperature: 70
+        hvac_mode: heat
+
+- alias: "Notify on presence change"
+  trigger:
+    platform: state
+    entity_id: sensor.adam_occupancy_confidence
+  action:
+    service: notify.mobile_app_iphone
+    data:
+      title: "Adam presence change"
+      message: "{{states.sensor.adam_occupancy_confidence.state}}"
+
+- alias: "Set heat to away"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.anyone_home
+    to: 'off'
+  condition: 
+    condition: state
+    entity_id: input_boolean.vacation_mode
+    state: 'off'
+  action:
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.remotec_zts_500us_heating_1_2
+        temperature: 60
+        hvac_mode: heat
+    - service: notify.mobile_app_iphone
+      data:
+        title: "Notice: Setting Heat"
+        message: "Heat changed to 60"
+
+- alias: Update MQTT sensors on startup
+  trigger:
+    - platform: homeassistant
+      event: start
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "monitor/scan/restart"

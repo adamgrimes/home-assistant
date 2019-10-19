@@ -103,3 +103,10 @@
   payload_not_available: "Offline"
   retain: false
 
+- platform: command_line
+  switches:
+    pihole_switch:
+      command_on: "curl -X GET 'http://192.168.86.20/admin/api.php?enable&auth=8ee69b0712d255f83bd51f5cc50fb21ac975327f2252a084a219509e62209a6f'"
+      command_off: "curl -X GET 'http://192.168.86.20/admin/api.php?disable=60&auth=8ee69b0712d255f83bd51f5cc50fb21ac975327f2252a084a219509e62209a6f'"
+      command_state: "curl -X GET 'http://192.168.86.20/admin/api.php?status&auth=8ee69b0712d255f83bd51f5cc50fb21ac975327f2252a084a219509e62209a6f'"
+      value_template: "{{ value_json.status == 'enabled' }}"

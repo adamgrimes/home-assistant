@@ -32,7 +32,6 @@ modes:
   control: hidden
   entities:
     - input_boolean.vacation_mode
-    - input_boolean.home_mode
     - input_boolean.sleep_mode
 
 climate:
@@ -78,7 +77,7 @@ default_view:
 #new_view:
   view: yes
   entities:
-    - device_tracker.iphone_3
+    - device_tracker.iphone
     - device_tracker.chibierkriss_iphone
 #    - binary_sensor.duplex_away
     - binary_sensor.anyone_home

@@ -15,21 +15,21 @@
     - temperature_high
     - temperature_low
 
-- platform: mqtt
-  name: "Hot Tub"
-  state_topic: home-assistant/sensor/hot-hub/state
-  expire_after: 600
-  device_class: temperature
-  unit_of_measurement: '°F'
-  icon: 'mdi:hot-tub'
-
-- platform: mqtt
-  name: "Hot Tub CPU"
-  state_topic: home-assistant/sensor/hot-hub-cpu/state
-  expire_after: 600
-  device_class: temperature
-  unit_of_measurement: '°F'
-  icon: 'mdi:server-network'
+#- platform: mqtt
+#  name: "Hot Tub"
+#  state_topic: home-assistant/sensor/hot-hub/state
+#  expire_after: 600
+#  device_class: temperature
+#  unit_of_measurement: '°F'
+#  icon: 'mdi:hot-tub'
+#
+#- platform: mqtt
+#  name: "Hot Tub CPU"
+#  state_topic: home-assistant/sensor/hot-hub-cpu/state
+#  expire_after: 600
+#  device_class: temperature
+#  unit_of_measurement: '°F'
+#  icon: 'mdi:server-network'
 
 ###################################################
 ### Monitor BT presence
@@ -64,17 +64,17 @@
   unit_of_measurement: '%'
   name: 'Adam Watch Front'
 - platform: mqtt
-  state_topic: 'monitor/basement-pi/CC:D2:81:2E:AF:00'
+  state_topic: 'monitor/basement-pi/adamwatch'
   value_template: '{{ value_json.confidence }}'
   unit_of_measurement: '%'
   name: 'Adam Basement'
 - platform: mqtt
-  state_topic: 'monitor/basement-pi/40:98:ad:2f:8d:d5'
+  state_topic: 'monitor/basement-pi/adamiphone'
   value_template: '{{ value_json.confidence }}'
   unit_of_measurement: '%'
   name: 'Kristin Basement'
 - platform: mqtt
-  state_topic: 'monitor/basement-pi/64:c7:53:ba:14:91'
+  state_topic: 'monitor/basement-pi/kristiniphone'
   value_template: '{{ value_json.confidence }}'
   unit_of_measurement: '%'
   name: 'Adam Watch Basement'
